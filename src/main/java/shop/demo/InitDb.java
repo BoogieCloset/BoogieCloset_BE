@@ -1,4 +1,3 @@
-
 package shop.demo;
 
 
@@ -52,11 +51,8 @@ public class InitDb {
             Member member = Member.createMember(createTestMemberDTO(), passwordEncoder);
             em.persist(member);
 
-            Member admin = createADMIN(createTestAdminDTO(),passwordEncoder);
-            em.persist(admin);
 
             Item cloth1 = createItem("상의1",10000,"image001.png");
-
             Item cloth2 = createItem("상의2",20000,"Vegetable short-sleeve t-shirt.JPG");
             em.persist(cloth1);
             em.persist(cloth2);
@@ -105,6 +101,7 @@ public class InitDb {
 
             return member;
         }
+
         public MemberDTO createTestAdminDTO() {
             MemberDTO memberDTO = new MemberDTO();
             memberDTO.setName("ADMIN");
@@ -114,29 +111,6 @@ public class InitDb {
             memberDTO.setDate(LocalDateTime.now());
             return memberDTO;
         }
-
-        public Member createADMIN(MemberDTO memberFormDto, PasswordEncoder passwordEncoder ) {
-            Member member = new Member();
-            member.setName(memberFormDto.getName());
-            member.setEmail(memberFormDto.getEmail());
-            member.setAddress(memberFormDto.getAddress());
-            member.setRegistrationDate(LocalDateTime.now());
-            String password =  passwordEncoder.encode(memberFormDto.getPassword());
-            member.setPassword(password);
-            member.setRole(Role.ROLE_ADMIN); // 계정 생성 시 권한을 USER으로 고정
-
-            return member;
-        }
-        public MemberDTO createTestAdminDTO() {
-            MemberDTO memberDTO = new MemberDTO();
-            memberDTO.setName("ADMIN");
-            memberDTO.setEmail("admin@hansung.ac.kr");
-            memberDTO.setPassword("admin1234");
-            memberDTO.setAddress("Test Address");
-            memberDTO.setDate(LocalDateTime.now());
-            return memberDTO;
-        }
-
 
         public MemberDTO createTestMemberDTO() {
             MemberDTO memberDTO = new MemberDTO();
@@ -154,16 +128,16 @@ public class InitDb {
             item.setPrice(price);
             item.setStockQuantity(10);
             item.setCategory(Category.valueOf("TOP"));
-            item.setImageUrl(url);
+            item.setImagePath(url);
             return item;
         }
 
-            private Address createAddress(Long zipcode, String detail ) {
-                Address address = new Address();
-                address.setZipcode(zipcode);
-                address.setDetail(detail);
-                return address;
-            }
+        private Address createAddress(Long zipcode, String detail ) {
+            Address address = new Address();
+            address.setZipcode(zipcode);
+            address.setDetail(detail);
+            return address;
+        }
 /*
             private Payment createPayment(Long cardnum ,Long amount) {
 
@@ -177,6 +151,5 @@ public class InitDb {
 
 
 
+    }
 }
-}
-
